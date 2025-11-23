@@ -9,6 +9,7 @@ fruits.pop("plum")
 console.log(fruits);
 
 // Adding a new fruit to the beginning of the array
+ fruits.unshift("Grapes")
 
 
 // Removing the first fruit from the array
