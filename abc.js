@@ -13,4 +13,5 @@ console.log(fruits);
 
 
 // Removing the first fruit from the array
+  fruits.shift("Apple")
 
