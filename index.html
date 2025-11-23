@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Methods Master</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f59e0b;
+        }
+
+        .btn-secondary:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            width: auto;
+            margin: 5px 5px 5px 0;
+            font-size: 0.9em;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            background: #f3f4f6;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+            border-left-color: #10b981;
+        }
+
+        .task-item.highlight {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .method-demo {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .method-title {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 2px dashed #ccc;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-item {
+            padding: 8px 12px;
+            background: #e0e7ff;
+            border-radius: 4px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .demo-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: slideInRight 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📚 Document Methods Master</h1>
+            <p class="subtitle">Learn JavaScript DOM manipulation through an interactive task manager</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Left: Task Manager -->
+            <div class="card">
+                <h2>Task Manager</h2>
+                <input type="text" id="taskInput" placeholder="Enter a new task...">
+                <button class="btn btn-primary" id="addBtn">Add Task</button>
+                
+                <ul id="taskList" class="task-list"></ul>
+            </div>
+
+            <!-- Right: Methods Demo -->
+            <div class="card">
+                <h2>Methods Playground</h2>
+                
+                <div class="method-demo">
+                    <div class="method-title">1️⃣ getElementById - Change Header</div>
+                    <button class="btn btn-small btn-secondary" id="changeHeaderBtn">Change Header</button>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">2️⃣ getElementsByClassName - Highlight Tasks</div>
+                    <button class="btn btn-small btn-secondary" id="highlightBtn">Highlight All</button>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">3️⃣ querySelector - Style First Task</div>
+                    <button class="btn btn-small btn-secondary" id="styleFirstBtn">Style First</button>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">4️⃣ querySelectorAll - Count Tasks</div>
+                    <button class="btn btn-small btn-secondary" id="countBtn">Count Tasks</button>
+                    <div id="countDisplay" style="margin-top: 10px; font-weight: 600;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom: Advanced Methods Demo -->
+        <div class="card">
+            <h2>Advanced Methods</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                
+                <div class="method-demo">
+                    <div class="method-title">5️⃣ createElement + appendChild</div>
+                    <button class="btn btn-small btn-secondary" id="createBtn">Create New Element</button>
+                    <div id="createBox" class="demo-box"></div>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">6️⃣ setAttribute - Update Links</div>
+                    <button class="btn btn-small btn-secondary" id="linkBtn">Create Link</button>
+                    <div id="linkBox" class="demo-box"></div>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">7️⃣ insertBefore - Insert Element</div>
+                    <button class="btn btn-small btn-secondary" id="insertBtn">Insert First</button>
+                    <div id="insertBox" class="demo-box">
+                        <span id="insertTarget" class="demo-item">I'm here</span>
+                    </div>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">8️⃣ remove() - Delete Element</div>
+                    <button class="btn btn-small btn-secondary" id="removeBtn">Remove Element</button>
+                    <div id="removeBox" class="demo-box">
+                        <span id="removeTarget" class="demo-item">Click to remove me</span>
+                    </div>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">9️⃣ replaceChild - Swap Element</div>
+                    <button class="btn btn-small btn-secondary" id="replaceBtn">Replace Me</button>
+                    <div id="replaceBox" class="demo-box">
+                        <span id="replaceTarget" class="demo-item">Old Element</span>
+                    </div>
+                </div>
+
+                <div class="method-demo">
+                    <div class="method-title">🔟 addEventListener - Click Events</div>
+                    <button class="btn btn-small btn-secondary" id="eventBtn">Add Event Listener</button>
+                    <div id="eventBox" class="demo-box" style="cursor: pointer; user-select: none;">Click me!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // TASK MANAGER - Practical Application of Document Methods
+
+        const taskInput = document.getElementById("taskInput");
+        const addBtn = document.getElementById("addBtn");
+        const taskList = document.getElementById("taskList");
+
+        // 1. getElementById - Add task
+        addBtn.addEventListener("click", () => {
+            if (taskInput.value.trim() === "") return;
+            
+            const li = document.createElement("li");
+            li.className = "task-item";
+            li.innerHTML = `
+                <span>${taskInput.value}</span>
+                <div class="task-actions">
+                    <button class="btn btn-small btn-secondary complete-btn">Complete</button>
+                    <button class="btn btn-small btn-danger delete-btn">Delete</button>
+                </div>
+            `;
+            
+            taskList.appendChild(li);
+            taskInput.value = "";
+            showNotification("✅ Task added!");
+
+            // Add event listeners to new buttons
+            li.querySelector(".complete-btn").addEventListener("click", function() {
+                this.closest(".task-item").classList.toggle("completed");
+            });
+
+            li.querySelector(".delete-btn").addEventListener("click", function() {
+                this.closest(".task-item").remove();
+                showNotification("🗑️ Task deleted!");
+            });
+        });
+
+        taskInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") addBtn.click();
+        });
+
+        // 2. getElementById + textContent - Change Header
+        document.getElementById("changeHeaderBtn").addEventListener("click", () => {
+            const header = document.querySelector("h1");
+            const current = header.textContent;
+            header.textContent = current.includes("📚") ? "✨ You're Learning DOM!" : "📚 Document Methods Master";
+            showNotification("Header changed!");
+        });
+
+        // 3. getElementsByClassName - Highlight Tasks
+        document.getElementById("highlightBtn").addEventListener("click", () => {
+            const tasks = document.getElementsByClassName("task-item");
+            for (let i = 0; i < tasks.length; i++) {
+                tasks[i].classList.toggle("highlight");
+            }
+            showNotification("Tasks highlighted!");
+        });
+
+        // 4. querySelector - Style First Task
+        document.getElementById("styleFirstBtn").addEventListener("click", () => {
+            const firstTask = document.querySelector(".task-item");
+            if (firstTask) {
+                firstTask.style.borderLeftWidth = "8px";
+                firstTask.style.borderLeftColor = "#667eea";
+                showNotification("First task styled!");
+            } else {
+                showNotification("No tasks to style!");
+            }
+        });
+
+        // 5. querySelectorAll - Count Tasks
+        document.getElementById("countBtn").addEventListener("click", () => {
+            const allTasks = document.querySelectorAll(".task-item");
+            const countDisplay = document.getElementById("countDisplay");
+            countDisplay.textContent = `📊 Total Tasks: ${allTasks.length}`;
+            showNotification(`Found ${allTasks.length} tasks!`);
+        });
+
+        // 6. createElement + appendChild
+        let elementCount = 1;
+        document.getElementById("createBtn").addEventListener("click", () => {
+            const newEl = document.createElement("span");
+            newEl.className = "demo-item active";
+            newEl.textContent = `Element ${elementCount}`;
+            document.getElementById("createBox").appendChild(newEl);
+            elementCount++;
+            showNotification("New element created!");
+        });
+
+        // 7. setAttribute
+        document.getElementById("linkBtn").addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.setAttribute("href", "https://developer.mozilla.org/en-US/docs/Web/API/Document");
+            link.setAttribute("target", "_blank");
+            link.className = "demo-item";
+            link.textContent = "📖 Learn More";
+            document.getElementById("linkBox").innerHTML = "";
+            document.getElementById("linkBox").appendChild(link);
+            showNotification("Link created with setAttribute!");
+        });
+
+        // 8. insertBefore
+        document.getElementById("insertBtn").addEventListener("click", () => {
+            const parent = document.getElementById("insertBox");
+            const newEl = document.createElement("span");
+            newEl.className = "demo-item active";
+            newEl.textContent = "New";
+            const target = document.getElementById("insertTarget");
+            parent.insertBefore(newEl, target);
+            showNotification("Element inserted before!");
+        });
+
+        // 9. remove()
+        document.getElementById("removeBtn").addEventListener("click", () => {
+            const removeTarget = document.getElementById("removeTarget");
+            if (removeTarget) {
+                removeTarget.remove();
+                showNotification("Element removed!");
+            }
+        });
+
+        // 10. replaceChild
+        document.getElementById("replaceBtn").addEventListener("click", () => {
+            const parent = document.getElementById("replaceBox");
+            const oldEl = document.getElementById("replaceTarget");
+            const newEl = document.createElement("span");
+            newEl.className = "demo-item active";
+            newEl.textContent = "New Element";
+            parent.replaceChild(newEl, oldEl);
+            showNotification("Element replaced!");
+        });
+
+        // 11. addEventListener with Event Object
+        document.getElementById("eventBtn").addEventListener("click", () => {
+            const eventBox = document.getElementById("eventBox");
+            eventBox.textContent = "✨ Event fired! Click again!";
+            eventBox.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+            eventBox.style.color = "white";
+            eventBox.addEventListener("click", function(event) {
+                event.stopPropagation();
+                this.style.transform = "scale(1.1)";
+                setTimeout(() => this.style.transform = "", 200);
+            });
+            showNotification("Event listener added!");
+        });
+
+        // Notification System
+        function showNotification(message) {
+            const notif = document.createElement("div");
+            notif.className = "notification";
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+    </script>
+
+</body>
+</html>
